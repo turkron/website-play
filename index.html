@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>This is the title page</title>
+</head>
+<body>
+
+<h1> This is the header </h1>
+
+text doesn't have to be formatted as a paragraph.
+here's a new line, but it isn't...
+
+<p> but here is a paragraph anyways </p>
+<p> and another one just in case </p>
+
+<p>The Canvas :</p>
+<!--<canvas id="myCanvas" width="1000" height="600" style="border: 1px solid #000000;"></canvas>-->
+<canvas id="coinAnimation" style="border: 1px solid #000000;"></canvas>
+
+
+<script type="text/javascript">
+
+    var img = new Image(),
+        coinAni = new Image();
+
+    img.src = "pic_the_scream.jpg";
+    coinAni.src = "coin-sprite-animation-sprite-sheet.png";
+
+    console.log(coinAni);
+
+    function sprite(options) {
+
+        var that = {},
+            frameIndex = 0,
+            tickCount = 0,
+            ticksPerFrame = options.ticksPerFrame || 0,
+            numberOfFrames = options.numberOfFrames || 1;
+
+        that.context = options.context;
+        that.width = options.width;
+        that.height = options.height;
+        that.image = options.image;
+
+        that.update = function () {
+            tickCount ++;
+            if(tickCount > ticksPerFrame){
+                //reset
+                tickCount = 0;
+                //if the current frame index is in range
+                if(frameIndex < numberOfFrames - 1){
+                    //go to next frame
+                    frameIndex ++;
+                } else {
+                    frameIndex = 0;
+                }
+            }
+        };
+
+        that.render = function (){
+
+           /* //Clear the canvas
+            that.context.clearRect(0,0,that.width,that.height);*/
+
+            //draw the animation
+            that.context.drawImage(
+                that.image,
+                frameIndex * that.width / numberOfFrames,
+                0,
+                that.width / numberOfFrames,
+                that.height,
+                0,
+                0,
+                that.width / numberOfFrames,
+                that.height);
+
+        };
+
+
+
+        return that;
+
+    }
+
+    var coinCanvas = document.getElementById("coinAnimation"),
+        CCContext = coinCanvas.getContext("2d");
+    coinCanvas.width = 100;
+    coinCanvas.height = 100;
+
+
+    //image size below
+    var coin = sprite({
+        context: coinCanvas.getContext("2d"),
+        width: 440,
+        height: 40,
+        image: coinAni,
+        numberOfFrames:10,
+        ticksPerFrame: 4
+    });
+
+    function gameLoop () {
+
+        window.requestAnimationFrame(gameLoop);
+        //Clear the canvas, applied here to allow the whole canvas to refresh at once.
+        CCContext.clearRect(0,0,coinCanvas.width,coinCanvas.height);
+        coin.update();
+        coin.render();
+    }
+
+    //start the gameloop as soon as the SpSh is loaded
+    coinAni.addEventListener("load",gameLoop);
+
+
+
+
+    /*window.onload = function () {
+
+        console.log("there is JS here");
+        console.log("I wonder what i can do with this");
+        var canvas = document.getElementById("myCanvas"),
+            ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = "#ff0000";
+        ctx.fillRect(0, 0, 150, 75);
+        ctx.moveTo(0, 0);
+        ctx.lineTo(200, 100);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(200, 200, 100, 0, 2 * Math.PI);
+        ctx.stroke();
+
+        ctx.font = "30px Arial";
+        ctx.fillText("Hello World", 50, 350);
+        ctx.strokeText("Hello World", 50, 400);
+
+        ctx.drawImage(img, 500, 50, 150, 100);
+
+    };*/
+
+</script>
+
+</body>
+</html>

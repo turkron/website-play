@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<canvas id="mainCanvas" style="border: 1px solid #000000;"></canvas>
+
+<script type="text/javascript">
+    //sprite library
+
+    var image1 = new Image();
+    image1.src = "spritesheet-demo.png";
+
+
+    //need to create a nice sprite object creator here.
+    function sprite(options) {
+
+        var that = {},
+            frameIndex = 0,
+            tickCount = 0,
+            ticksPerFrame = options.ticksPerFrame || 0,
+            numberOfFrames = options.numberOfFrames || 1;
+
+        that.context = options.context;
+        that.width = options.width;
+        that.height = options.height;
+        that.image = options.image;
+
+        that.update = function () {
+            tickCount ++;
+            if(tickCount > ticksPerFrame){
+                //reset
+                tickCount = 0;
+                //if the current frame index is in range
+                if(frameIndex < numberOfFrames - 1){
+                    //go to next frame
+                    frameIndex ++;
+                } else {
+                    frameIndex = 0;
+                }
+            }
+        };
+
+        that.render = function (){
+
+             //Clear the canvas
+             that.context.clearRect(0,0,that.width,that.height);
+
+            //draw the animation
+            that.context.drawImage(
+                that.image,
+                frameIndex * that.width / numberOfFrames,
+                0,
+                that.width / numberOfFrames,
+                that.height,
+                0,
+                0,
+                that.width / numberOfFrames,
+                that.height);
+
+        };
+
+
+
+        return that;
+
+    }
+
+    //creating a reference to the main canvas. also creates a reference to its context (not sure why).
+    var mainCanvas = document.getElementById("mainCanvas"),
+        CCContext = mainCanvas.getContext("2d");
+
+    //this canvas can now be used dynamically.
+    mainCanvas.height = 640;
+    mainCanvas.width = 1024;
+
+    //by using the sprite creation factory, we can now define animations.
+    var man = sprite({
+        context: mainCanvas.getContext("2d"),
+        width: 363,
+        height: 36,
+        image: image1,
+        numberOfFrames:10,
+        ticksPerFrame: 4
+    });
+
+
+
+    function gameLoop(){
+        //this loops the game loop
+        window.requestAnimationFrame(gameLoop);
+        //this line clears the canvas on each update to allow the animations to collect rubbish.
+        //CCContext.clearRect(0,0,mainCanvas.width,mainCanvas.height);
+        man.update();
+        man.render();
+
+    }
+
+    //start the gameloop as soon as the SpSh is loaded
+    image1.addEventListener("load",gameLoop);
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--should really look this up-->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Test website</title>
+</head>
+<!--can use this section below to define styles for elements of the website-->
+<!-- use "." before a class to define a custom one; you can add multiple classes to an element! -->
+<style media="screen" type="text/css">
+    body {
+        background: url("websiteRefs/medievil.jpg") fixed;
+        background-size: 100%;
+    }
+    p{
+        color: whitesmoke;
+    }
+</style>
+<body>
+
+
+<!-- navigation-->
+<nav class="w3-bar w3-black">
+    <a href="#home" class="w3-button w3-bar-item">Home</a>
+    <a href="#games" class="w3-button w3-bar-item">Games</a>
+    <a href="#tour" class="w3-button w3-bar-item">Tour</a>
+    <a href="#contact" class="w3-button w3-bar-item">Contact</a>
+</nav>
+
+<!-- Slide Show -->
+<section>
+    <img class="mySlides" src="websiteRefs/crash.jpg" style="width:100%; max-height: 400px">
+    <img class="mySlides" src="websiteRefs/mario.jpg" style="width:100%; max-height: 400px">
+    <img class="mySlides" src="websiteRefs/mario2.jpg" style="width:100%;max-height: 400px">
+</section>
+
+<script>
+    // Automatic Slideshow - change image every 3 seconds
+    var myIndex = 0;
+    carousel("mySlides");
+
+    function carousel(className) {
+        var i;
+        var x = document.getElementsByClassName(className);
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        myIndex++;
+        console.log(x, myIndex);
+        if (myIndex > x.length) {
+            myIndex = 1
+        }
+        x[myIndex - 1].style.display = "block";
+        setTimeout(carousel, 3000, className);
+    }
+</script>
+
+<section class="w3-container w3-center" style="max-width: 600px;color: whitesmoke">
+    <h2 class="w3-wide" style="color: inherit">THE GAMES</h2>
+    <p class="w3-opacity" style="color: inherit"><i>Here, There be dragons</i></p>
+</section>
+
+<section class="w3-container w3-content w3-center" style="max-width:600px ; color: whitesmoke">
+    <p class="w3-justify" style="color: inherit">
+        We have created a fictional game website. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+</section>
+
+<section class="w3-row-padding w3-center">
+    <article class="w3-third">
+        <a target="_blank" href="./streetFighterLP.html">
+            <img src="websiteRefs/streetFighter.jpg" alt="StreetFighter" style="width: 100%; height: auto">
+            <p>John</p>
+        </a>
+    </article>
+    <article class="w3-third">
+        <a target="_blank" href="http://www.google.com/search?q=Zelda">
+            <img src="websiteRefs/zelda.jpg" alt="Zelda" style="width: 100%; height: 100%">
+            <p style="color: whitesmoke">Paul</p>
+        </a>
+    </article>
+    <article class="w3-third">
+        <a target="_blank" href="http://www.google.com/search?q=pong">
+            <img src="websiteRefs/pong.png" alt="Pong" style="width: 100%; height: 100%">
+            <p>Ringo</p>
+        </a>
+    </article>
+    <article class="w3-third">
+        <a target="_blank" href="http://www.google.com/search?q=mortalKombat">
+            <img src="websiteRefs/mortalKombat.jpg" alt="MortalKombat" style="width: 100%; height: auto">
+            <p>Bob</p>
+        </a>
+    </article>
+</section>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-black w3-xlarge">
+    <a href="#"><i class="fa fa-facebook-official"></i></a>
+    <a href="#"><i class="fa fa-pinterest-p"></i></a>
+    <a href="#"><i class="fa fa-twitter"></i></a>
+    <a href="#"><i class="fa fa-flickr"></i></a>
+    <a href="#"><i class="fa fa-linkedin"></i></a>
+    <p class="w3-medium">
+        Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a>
+    </p>
+</footer>
+
+</body>
+</html>
